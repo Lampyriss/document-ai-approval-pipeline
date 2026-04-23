@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Approval System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 24px 32px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .header .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 32px;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .info-section h2 {
+            color: #1e3c72;
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .step-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+        
+        .document-section {
+            margin-bottom: 24px;
+        }
+        
+        .document-section h2 {
+            color: #1e3c72;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        
+        .document-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #e8f5e9;
+            padding: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2e7d32;
+            transition: all 0.3s;
+        }
+        
+        .document-link:hover {
+            background: #c8e6c9;
+            transform: translateY(-2px);
+        }
+        
+        .upload-section {
+            background: #fff3e0;
+            border: 2px dashed #ff9800;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .upload-section:hover {
+            background: #ffe0b2;
+            border-color: #f57c00;
+        }
+        
+        .upload-section.dragover {
+            background: #ffe0b2;
+            border-color: #f57c00;
+            transform: scale(1.02);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-text {
+            color: #e65100;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .upload-hint {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-selected {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 12px;
+            background: #c8e6c9;
+            border-radius: 8px;
+            color: #2e7d32;
+        }
+        
+        .comment-section {
+            margin-bottom: 24px;
+        }
+        
+        .comment-section h2 {
+            color: #1e3c72;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .comment-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        .comment-input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+        
+        .button-section {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            padding-top: 16px;
+        }
+        
+        .btn {
+            padding: 16px 48px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-approve {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+        }
+        
+        .btn-approve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .btn-reject {
+            background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+            color: white;
+        }
+        
+        .btn-reject:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 67, 54, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 32px;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e0e0e0;
+            border-top-color: #1e3c72;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .result-message {
+            display: none;
+            text-align: center;
+            padding: 48px 32px;
+        }
+        
+        .result-message.show {
+            display: block;
+        }
+        
+        .result-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .result-message.success .result-icon {
+            color: #4caf50;
+        }
+        
+        .result-message.error .result-icon {
+            color: #f44336;
+        }
+        
+        .result-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .result-detail {
+            color: #666;
+        }
+        
+        .error-box {
+            background: #ffebee;
+            border: 1px solid #ef5350;
+            color: #c62828;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: none;
+        }
+        
+        .error-box.show {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Document Approval System</h1>
+            <div class="subtitle">Kasetsart University - Registrar Office</div>
+        </div>
+        
+        <div class="content">
+            <!-- Error Message -->
+            <div class="error-box" id="errorBox"></div>
+            
+            <!-- Main Form -->
+            <div id="mainForm">
+                <!-- Request Info -->
+                <div class="info-section">
+                    <h2>Request Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Request ID</span>
+                            <span class="info-value" id="requestId">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Form Type</span>
+                            <span class="info-value" id="formType">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Student ID</span>
+                            <span class="info-value" id="studentId">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Student Name</span>
+                            <span class="info-value" id="studentName">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Faculty</span>
+                            <span class="info-value" id="faculty">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Submit Date</span>
+                            <span class="info-value" id="submitDate">-</span>
+                        </div>
+                    </div>
+                    <div class="step-badge" id="stepBadge">
+                        Step <span id="currentStep">1</span> of <span id="totalSteps">2</span>
+                    </div>
+                </div>
+                
+                <!-- Original Document -->
+                <div class="document-section">
+                    <h2>Original Document</h2>
+                    <a href="#" class="document-link" id="documentLink" target="_blank">
+                        <span style="font-size: 24px;">📄</span>
+                        <span>View Original Document</span>
+                    </a>
+                </div>
+                
+                <!-- Upload Signed Document -->
+                <div class="upload-section" id="uploadArea">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-text">Upload Signed Document</div>
+                    <div class="upload-hint">Click or drag file here (PDF, JPG, PNG - Max 10MB)</div>
+                    <input type="file" class="file-input" id="fileInput" accept=".pdf,.jpg,.jpeg,.png">
+                    <div class="file-selected" id="fileSelected" style="display: none;">
+                        <span>📎</span>
+                        <span id="fileName"></span>
+                        <button onclick="clearFile(event)" style="background: none; border: none; cursor: pointer; color: #c62828;">✕</button>
+                    </div>
+                </div>
+                
+                <!-- Comment -->
+                <div class="comment-section">
+                    <h2>Comment (Optional)</h2>
+                    <textarea class="comment-input" id="commentInput" placeholder="Enter your comment here..."></textarea>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="button-section">
+                    <button class="btn btn-reject" id="btnReject" onclick="submitDecision('reject')">
+                        <span>❌</span> Reject
+                    </button>
+                    <button class="btn btn-approve" id="btnApprove" onclick="submitDecision('approve')">
+                        <span>✅</span> Approve
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Loading -->
+            <div class="loading" id="loadingSection">
+                <div class="spinner"></div>
+                <div>Processing your decision...</div>
+            </div>
+            
+            <!-- Result -->
+            <div class="result-message" id="resultSection">
+                <div class="result-icon" id="resultIcon"></div>
+                <div class="result-text" id="resultText"></div>
+                <div class="result-detail" id="resultDetail"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestId = urlParams.get('id');
+        const token = urlParams.get('token');
+        
+        // Store request data
+        let requestData = null;
+        let selectedFile = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!requestId || !token) {
+                showError('Invalid approval link. Missing request ID or token.');
+                document.getElementById('mainForm').style.display = 'none';
+                return;
+            }
+            
+            loadRequestData();
+            setupDragAndDrop();
+        });
+        
+        // Load request data from API
+        async function loadRequestData() {
+            try {
+                const response = await fetch(`/api/approval/request/${requestId}?token=${token}`);
+                const data = await response.json();
+                
+                if (!data.success) {
+                    showError(data.message || 'Failed to load request data');
+                    document.getElementById('mainForm').style.display = 'none';
+                    return;
+                }
+                
+                requestData = data.data;
+                
+                // Populate fields
+                document.getElementById('requestId').textContent = requestData.id || requestId;
+                document.getElementById('formType').textContent = requestData.formType || '-';
+                document.getElementById('studentId').textContent = requestData.studentId || '-';
+                document.getElementById('studentName').textContent = requestData.studentName || '-';
+                document.getElementById('faculty').textContent = requestData.faculty || '-';
+                document.getElementById('submitDate').textContent = requestData.submitDate || '-';
+                document.getElementById('currentStep').textContent = requestData.currentStep || 1;
+                document.getElementById('totalSteps').textContent = requestData.totalSteps || 2;
+                
+                // Set document link
+                if (requestData.documentUrl) {
+                    document.getElementById('documentLink').href = requestData.documentUrl;
+                }
+                
+            } catch (error) {
+                console.error('Error loading request:', error);
+                showError('Failed to connect to server. Please try again later.');
+            }
+        }
+        
+        // Setup drag and drop
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+        }
+        
+        // Handle file selection
+        function handleFile(file) {
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+            
+            if (!allowedTypes.includes(file.type)) {
+                showError('Invalid file type. Please upload PDF, JPG, or PNG.');
+                return;
+            }
+            
+            if (file.size > maxSize) {
+                showError('File too large. Maximum size is 10MB.');
+                return;
+            }
+            
+            selectedFile = file;
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSelected').style.display = 'flex';
+            hideError();
+        }
+        
+        // Clear selected file
+        function clearFile(event) {
+            event.stopPropagation();
+            selectedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('fileSelected').style.display = 'none';
+        }
+        
+        // Submit decision
+        async function submitDecision(decision) {
+            const comment = document.getElementById('commentInput').value;
+            
+            // Disable buttons
+            document.getElementById('btnApprove').disabled = true;
+            document.getElementById('btnReject').disabled = true;
+            
+            // Show loading
+            document.getElementById('mainForm').style.display = 'none';
+            document.getElementById('loadingSection').classList.add('show');
+            
+            try {
+                // Prepare form data
+                const formData = new FormData();
+                formData.append('requestId', requestId);
+                formData.append('token', token);
+                formData.append('decision', decision);
+                formData.append('comment', comment);
+                
+                if (selectedFile) {
+                    formData.append('signedDocument', selectedFile);
+                }
+                
+                // Send to API
+                const response = await fetch('/api/approval/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                // Hide loading
+                document.getElementById('loadingSection').classList.remove('show');
+                
+                // Show result
+                const resultSection = document.getElementById('resultSection');
+                resultSection.classList.add('show');
+                
+                if (result.success) {
+                    resultSection.classList.add('success');
+                    resultSection.classList.remove('error');
+                    document.getElementById('resultIcon').textContent = '✅';
+                    document.getElementById('resultText').textContent = 
+                        decision === 'approve' ? 'Approved Successfully!' : 'Rejected Successfully!';
+                    document.getElementById('resultDetail').textContent = 
+                        result.message || 'Your decision has been recorded.';
+                } else {
+                    resultSection.classList.add('error');
+                    resultSection.classList.remove('success');
+                    document.getElementById('resultIcon').textContent = '❌';
+                    document.getElementById('resultText').textContent = 'Error';
+                    document.getElementById('resultDetail').textContent = 
+                        result.message || 'Failed to process your decision.';
+                }
+                
+            } catch (error) {
+                console.error('Error submitting decision:', error);
+                
+                document.getElementById('loadingSection').classList.remove('show');
+                
+                const resultSection = document.getElementById('resultSection');
+                resultSection.classList.add('show', 'error');
+                document.getElementById('resultIcon').textContent = '❌';
+                document.getElementById('resultText').textContent = 'Connection Error';
+                document.getElementById('resultDetail').textContent = 
+                    'Failed to connect to server. Please try again.';
+            }
+        }
+        
+        // Show error
+        function showError(message) {
+            const errorBox = document.getElementById('errorBox');
+            errorBox.textContent = message;
+            errorBox.classList.add('show');
+        }
+        
+        // Hide error
+        function hideError() {
+            document.getElementById('errorBox').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

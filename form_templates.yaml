@@ -1,0 +1,199 @@
+# Form Templates Configuration
+# ใช้สำหรับ extract ข้อมูลจากฟอร์มต่างๆ
+# แก้ไขได้โดยไม่ต้องแก้ code
+
+# ===== แบบ 18: ขอคืนเงินค่าธรรมเนียม =====
+form_18:
+  name: "ขอคืนเงินค่าธรรมเนียมการศึกษา"
+  name_en: "Request for Tuition Fee Refund"
+  
+  # Keywords สำหรับจำแนกประเภท
+  keywords:
+    - "registrar-18"
+    - "registrar 18"
+    - "แบบ 18"
+    - "ขอคืนเงิน"
+    - "คืนเงินค่าธรรมเนียม"
+    - "refund"
+    - "tuition fee refund"
+  
+  # Patterns สำหรับ extract ข้อมูล
+  fields:
+    student_id:
+      patterns:
+        - '(?:รหัส(?:นิสิต|นักศึกษา)?|student\s*id|id)[:\s]*(\d{10})'
+        - '(\d{10})'
+      required: true
+      
+    name:
+      patterns:
+        - '(?:ชื่อ|name)[:\s-]*(?:นาย|นาง|นางสาว|mr\.?|mrs\.?|miss\.?|ms\.?)?\s*([ก-์a-zA-Z\s]+)'
+        - '(?:นาย|นาง|นางสาว)\s*([ก-์\s]+)'
+      required: true
+      
+    faculty:
+      patterns:
+        - '(?:คณะ|faculty)[:\s]*([ก-์a-zA-Z\s]+?)(?:\s*(?:ภาค|สาขา|department)|$)'
+        - '(?:faculty|คณะ)[:\s/]*([ก-์a-zA-Z]+)'
+      required: false
+      
+    department:
+      patterns:
+        - '(?:ภาค(?:วิชา)?|สาขา|department)[:\s]*([ก-์a-zA-Z\s]+)'
+      required: false
+      
+    semester:
+      patterns:
+        - '(?:ภาค(?:การศึกษา)?|semester)[:\s]*(\d|ต้น|ปลาย|ฤดูร้อน)'
+        - '(?:เทอม|term)[:\s]*(\d)'
+      required: false
+      
+    academic_year:
+      patterns:
+        - '(?:ปีการศึกษา|academic\s*year)[:\s]*(\d{4})'
+        - '(?:ปี|year)[:\s]*(\d{4})'
+      required: false
+      
+    refund_amount:
+      patterns:
+        - '(?:จำนวนเงิน|amount)[:\s]*([\d,]+(?:\.\d{2})?)\s*(?:บาท|baht)?'
+        - '([\d,]+)\s*(?:บาท|baht)'
+      required: false
+      type: float
+      
+    bank_name:
+      patterns:
+        - '(?:ธนาคาร|bank)[:\s]*([ก-์a-zA-Z\s]+?)(?:\s*(?:สาขา|branch|เลขที่)|$)'
+        - '(?:กสิกร|กรุงเทพ|ไทยพาณิชย์|กรุงไทย|ทหารไทยธนชาต|ออมสิน)'
+      required: false
+      
+    bank_account:
+      patterns:
+        - '(?:เลขที่บัญชี|เลขบัญชี|account)[:\s]*([\d-]+)'
+        - '(\d{3}-\d+-\d+)'
+      required: false
+
+# ===== แบบ 20: ขอลงทะเบียนเพิ่ม =====
+form_20:
+  name: "คำร้องขอลงทะเบียนเรียนเพิ่ม"
+  name_en: "Add Registration Request"
+  
+  keywords:
+    - "registrar-20"
+    - "registrar 20"
+    - "แบบ 20"
+    - "ลงทะเบียนเพิ่ม"
+    - "ลงทะเบียนเรียนเพิ่ม"
+    - "add registration"
+    - "additional course"
+  
+  fields:
+    student_id:
+      patterns:
+        - '(?:รหัส(?:นิสิต|นักศึกษา)?|student\s*id|id)[:\s]*(\d{10})'
+        - '(\d{10})'
+      required: true
+      
+    name:
+      patterns:
+        - '(?:ชื่อ|name)[:\s-]*(?:นาย|นาง|นางสาว|mr\.?|mrs\.?|miss\.?)?\s*([ก-์a-zA-Z\s]+)'
+        - '(?:นาย|นาง|นางสาว)\s*([ก-์\s]+)'
+      required: true
+      
+    faculty:
+      patterns:
+        - '(?:คณะ|faculty)[:\s]*([ก-์a-zA-Z\s]+?)(?:\s*(?:ภาค|สาขา)|$)'
+      required: false
+      
+    advisor:
+      patterns:
+        - '(?:อาจารย์ที่ปรึกษา|advisor)[:\s]*(?:ดร\.|ผศ\.|รศ\.|ศ\.|dr\.?)?\s*([ก-์a-zA-Z\s]+)'
+      required: false
+      
+    # Course patterns - จะ extract เป็น list
+    courses:
+      patterns:
+        - '(\d{8})\s+([ก-์a-zA-Z\s]+?)\s+(\d)\s*(?:หน่วยกิต|นก\.?|credits?)'
+        - '(?:รหัสวิชา|course)[:\s]*(\d{8})'
+      type: list
+      required: false
+      
+    reason:
+      patterns:
+        - '(?:เหตุผล|reason)[:\s]*([ก-์a-zA-Z\s,\.]+)'
+      required: false
+
+# ===== แบบ 4: ขอลงทะเบียนเรียนควบ =====
+form_4:
+  name: "คำร้องขอลงทะเบียนเรียนควบ"
+  name_en: "Continuing Course with Prerequisite Request"
+  
+  keywords:
+    - "registrar-4"
+    - "registrar 4"
+    - "แบบ 4"
+    - "เรียนควบ"
+    - "ลงทะเบียนเรียนควบ"
+    - "prerequisite"
+    - "continuing course"
+    - "วิชาบังคับก่อน"
+    - "วิชาต่อเนื่อง"
+  
+  fields:
+    student_id:
+      patterns:
+        - '(?:รหัส(?:นิสิต|นักศึกษา)?|student\s*id|id)[:\s]*(\d{10})'
+        - '(\d{10})'
+      required: true
+      
+    name:
+      patterns:
+        - '(?:ชื่อ|name)[:\s-]*(?:นาย|นาง|นางสาว|mr\.?|mrs\.?|miss\.?)?\s*([ก-์a-zA-Z\s]+)'
+      required: true
+      
+    faculty:
+      patterns:
+        - '(?:คณะ|faculty)[:\s]*([ก-์a-zA-Z\s]+?)(?:\s*(?:ภาค|สาขา)|$)'
+      required: false
+      
+    advisor:
+      patterns:
+        - '(?:อาจารย์ที่ปรึกษา|advisor)[:\s]*(?:ดร\.|ผศ\.|รศ\.|ศ\.|dr\.?)?\s*([ก-์a-zA-Z\s]+)'
+      required: false
+      
+    prerequisite_course:
+      patterns:
+        - '(?:วิชาบังคับก่อน|prerequisite)[:\s]*(\d{8})\s*([ก-์a-zA-Z\s]*)'
+      type: object
+      fields:
+        - course_code
+        - course_name
+      required: false
+      
+    continuing_course:
+      patterns:
+        - '(?:วิชาต่อเนื่อง|continuing)[:\s]*(\d{8})\s*([ก-์a-zA-Z\s]*)'
+      type: object
+      fields:
+        - course_code
+        - course_name
+      required: false
+      
+    reason:
+      patterns:
+        - '(?:เหตุผล|reason)[:\s]*([ก-์a-zA-Z\s,\.]+)'
+      required: false
+
+# ===== Global Settings =====
+settings:
+  # Confidence thresholds
+  min_confidence: 0.5
+  high_confidence: 0.8
+  
+  # Classification settings
+  min_keyword_matches: 1
+  
+  # Default values
+  defaults:
+    faculty: "ไม่ระบุ"
+    department: "ไม่ระบุ"

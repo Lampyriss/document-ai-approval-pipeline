@@ -1,0 +1,39 @@
+{
+  "name": "Document_Request_Flow1",
+  "purpose": "Receive Microsoft Forms submissions, run OCR, persist request data, and start advisor approval.",
+  "connectors": [
+    "Microsoft Forms",
+    "HTTP",
+    "SharePoint",
+    "Approvals",
+    "Microsoft Teams",
+    "OneDrive for Business"
+  ],
+  "trigger": {
+    "type": "Microsoft Forms webhook",
+    "form_id": "<MICROSOFT_FORM_ID>"
+  },
+  "actions": [
+    "Get response details",
+    "Download uploaded PDF",
+    "Call POST /api/ocr/powerautomate",
+    "Normalize OCR response",
+    "Create request record",
+    "Send dashboard webhook",
+    "Start advisor approval",
+    "Handle approve / reject callbacks"
+  ],
+  "outputs": [
+    "request_id",
+    "student metadata",
+    "form_type",
+    "ocr_confidence",
+    "advisor decision",
+    "dashboard status update"
+  ],
+  "notes": [
+    "Original tenant-specific connector references removed.",
+    "Signed callback URLs removed.",
+    "Live site URLs replaced with placeholders."
+  ]
+}

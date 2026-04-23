@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Local config
+.env
+.env.local
+.env.*.local
+!.env.example
+!.env.local.example
+
+# Databases and runtime output
+*.db
+*.sqlite
+*.sqlite3
+logs/
+tmp/
+temp/
+
+# Node / Next.js
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+dashboard/.vercel/
+dashboard/.turbo/
+dashboard/*.tsbuildinfo
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Portfolio safety
+automation/*.raw.json
+automation/*.local.json
+*.secrets.json

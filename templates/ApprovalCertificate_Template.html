@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ใบรับรองการอนุมัติคำร้อง</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+      body {
+        font-family: "TH Sarabun New", "Sarabun", Arial, sans-serif;
+        font-size: 16pt;
+        line-height: 1.5;
+        max-width: 21cm;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+      }
+      .logo-placeholder {
+        width: 80px;
+        height: 80px;
+        border: 2px dashed #999;
+        margin: 0 auto 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10pt;
+        color: #999;
+      }
+      .title {
+        font-size: 20pt;
+        font-weight: bold;
+        color: #1a5f2a;
+        margin: 10px 0;
+      }
+      .subtitle {
+        font-size: 14pt;
+        color: #666;
+      }
+      .divider {
+        border-top: 2px solid #1a5f2a;
+        margin: 20px 0;
+      }
+      .info-section {
+        margin: 20px 0;
+      }
+      .info-row {
+        margin: 8px 0;
+      }
+      .label {
+        font-weight: bold;
+        display: inline-block;
+        width: 150px;
+      }
+      .value {
+        color: #0066cc;
+        font-weight: bold;
+      }
+      .placeholder {
+        background-color: #fff3cd;
+        padding: 2px 8px;
+        border: 1px solid #ffc107;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 14pt;
+      }
+      .approval-box {
+        background-color: #d4edda;
+        border: 2px solid #28a745;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 30px 0;
+      }
+      .approval-status {
+        font-size: 24pt;
+        font-weight: bold;
+        color: #155724;
+      }
+      .signature-section {
+        text-align: center;
+        margin: 40px 0 20px;
+      }
+      .signature-placeholder {
+        width: 200px;
+        height: 60px;
+        border: 2px dashed #999;
+        margin: 0 auto 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10pt;
+        color: #999;
+      }
+      .signature-line {
+        width: 250px;
+        border-bottom: 1px solid #333;
+        margin: 5px auto;
+      }
+      .approver-name {
+        font-weight: bold;
+        margin-top: 5px;
+      }
+      .approver-position {
+        color: #666;
+        font-size: 14pt;
+      }
+      .datetime {
+        margin-top: 15px;
+        font-size: 14pt;
+      }
+      .footer {
+        margin-top: 40px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        font-size: 12pt;
+        color: #666;
+        text-align: center;
+      }
+      .warning-icon {
+        color: #ffc107;
+      }
+      .reference-code {
+        font-family: monospace;
+        background-color: #f8f9fa;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+
+      /* Instructions */
+      .instructions {
+        background-color: #e7f3ff;
+        border: 1px solid #0066cc;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 30px;
+        font-size: 12pt;
+      }
+      .instructions h3 {
+        color: #0066cc;
+        margin-top: 0;
+      }
+      .instructions ul {
+        margin: 10px 0;
+        padding-left: 20px;
+      }
+      .delete-before-use {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ⚠️ คำแนะนำ - ลบส่วนนี้ก่อนใช้งานจริง -->
+    <div class="instructions">
+      <h3>📋 คำแนะนำการใช้งาน Template นี้</h3>
+      <p class="delete-before-use">⚠️ กรุณาลบกล่องนี้ออกก่อนใช้งานจริง!</p>
+      <ul>
+        <li><b>ขั้นตอนที่ 1:</b> เปิดไฟล์นี้ด้วย Microsoft Word</li>
+        <li><b>ขั้นตอนที่ 2:</b> Save As เป็น .docx</li>
+        <li>
+          <b>ขั้นตอนที่ 3:</b> แทนที่ข้อความสีน้ำเงิน (เช่น {{StudentName}})
+          ด้วย Content Control
+        </li>
+        <li>
+          <b>ขั้นตอนที่ 4:</b> แทนที่กล่อง "ใส่โลโก้" และ "ใส่ลายเซ็น"
+          ด้วยรูปภาพจริง
+        </li>
+        <li><b>ขั้นตอนที่ 5:</b> ลบกล่องคำแนะนำนี้ออก</li>
+        <li><b>ขั้นตอนที่ 6:</b> Upload ไปยัง OneDrive</li>
+      </ul>
+    </div>
+    <!-- จบคำแนะนำ -->
+
+    <!-- ===== เนื้อหา Template เริ่มต้นที่นี่ ===== -->
+
+    <div class="header">
+      <div class="logo-placeholder">[ใส่โลโก้ มก.]</div>
+      <div class="title">ใบรับรองการอนุมัติคำร้อง</div>
+      <div class="subtitle">มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตศรีราชา</div>
+      <div class="subtitle">Kasetsart University Sriracha Campus</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="info-section">
+      <div class="info-row">
+        <span class="label">เลขที่คำร้อง:</span>
+        <span class="placeholder">{{RequestID}}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">ประเภทคำร้อง:</span>
+        <span class="placeholder">{{FormType}}</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="info-section">
+      <h3 style="margin-top: 0">📋 ข้อมูลผู้ยื่นคำร้อง</h3>
+      <div class="info-row">
+        <span class="label">ชื่อ-นามสกุล:</span>
+        <span class="placeholder">{{StudentName}}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">รหัสนิสิต:</span>
+        <span class="placeholder">{{StudentID}}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">คณะ/สาขา:</span>
+        <span class="placeholder">{{Faculty}}</span>
+      </div>
+    </div>
+
+    <div class="approval-box">
+      <div class="approval-status">✅ อนุมัติ (Approved)</div>
+    </div>
+
+    <div class="signature-section">
+      <div class="signature-placeholder">[ใส่รูปลายเซ็น]</div>
+      <div class="signature-line"></div>
+      <div class="approver-name">
+        <span class="placeholder">{{ApproverName}}</span>
+      </div>
+      <div class="approver-position">
+        <span class="placeholder">{{ApproverPosition}}</span>
+      </div>
+
+      <div class="datetime">
+        <div>
+          📅 วันที่อนุมัติ: <span class="placeholder">{{ApprovalDate}}</span>
+        </div>
+        <div>🕐 เวลา: <span class="placeholder">{{ApprovalTime}}</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="footer">
+      <p>
+        <span class="warning-icon">⚠️</span> เอกสารนี้ออกโดยระบบอัตโนมัติ
+        กรุณาเก็บไว้เป็นหลักฐาน
+      </p>
+      <p>
+        รหัสอ้างอิง:
+        <span class="reference-code"
+          >REF-<span class="placeholder">{{RequestID}}</span>-<span
+            class="placeholder"
+            >{{ApprovalDate}}</span
+          ></span
+        >
+      </p>
+      <p style="font-size: 10pt; color: #999">
+        Document AI Request Management System<br />
+        Faculty of Science at Sriracha, Kasetsart University
+      </p>
+    </div>
+  </body>
+</html>

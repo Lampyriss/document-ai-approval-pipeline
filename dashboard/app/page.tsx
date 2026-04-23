@@ -1,0 +1,23 @@
+import { DashboardSidebar } from "@/components/dashboard/sidebar";
+import { DashboardHeader } from "@/components/dashboard/header";
+import { DashboardContent } from "@/components/dashboard/content";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { ToastContainer } from "@/components/dashboard/toast-container";
+import { DashboardDataProvider } from "@/contexts/dashboard-data-context";
+
+export default function DashboardPage() {
+  return (
+    <DashboardDataProvider>
+      <SidebarProvider className="bg-sidebar">
+        <DashboardSidebar />
+        <div className="h-svh overflow-hidden lg:p-2 w-full">
+          <div className="lg:border lg:rounded-md overflow-hidden flex flex-col items-center justify-start bg-container h-full w-full bg-background">
+            <DashboardHeader />
+            <DashboardContent />
+          </div>
+        </div>
+        <ToastContainer />
+      </SidebarProvider>
+    </DashboardDataProvider>
+  );
+}

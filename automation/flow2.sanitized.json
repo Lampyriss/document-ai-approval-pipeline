@@ -1,0 +1,44 @@
+{
+  "name": "Document_Request_Flow2",
+  "purpose": "Continue multi-step approvals, generate the cover sheet, and prepare the final merged document.",
+  "connectors": [
+    "HTTP Request trigger",
+    "SharePoint",
+    "Approvals",
+    "Microsoft Teams"
+  ],
+  "trigger": {
+    "type": "HTTP request",
+    "schema": [
+      "requestId",
+      "studentEmail",
+      "studentName",
+      "studentId",
+      "formType",
+      "pdfBase64",
+      "documentLink",
+      "courses"
+    ]
+  },
+  "actions": [
+    "Validate advisor-approved payload",
+    "Create instructor approval steps",
+    "Track completed approvals",
+    "Call POST /api/cover-sheet/generate",
+    "Call POST /api/final-document/generate",
+    "Update request status",
+    "Send dashboard status webhook"
+  ],
+  "outputs": [
+    "instructor decisions",
+    "office decision",
+    "cover sheet PDF",
+    "final merged document",
+    "final workflow status"
+  ],
+  "notes": [
+    "Personal emails replaced with placeholders.",
+    "Tenant-specific identifiers removed.",
+    "Reference only; rebuild expressions in your own environment."
+  ]
+}

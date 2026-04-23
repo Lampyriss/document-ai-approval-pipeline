@@ -1,0 +1,41 @@
+# Document AI - OCR API Dependencies (v4.1.0 - Fixed Versions)
+
+# Web Framework (Compatible versions)
+fastapi==0.104.1
+starlette==0.27.0
+uvicorn==0.24.0
+python-multipart==0.0.6
+anyio==3.7.1
+
+# OCR - Gemini Vision (Primary & Only - Thai handwriting support)
+google-genai>=1.0.0
+
+# Note: EasyOCR/torch removed to save ~1.5GB RAM on HF Spaces
+
+# PDF Processing
+PyMuPDF==1.23.6
+
+# Image Processing
+Pillow==10.1.0
+numpy>=1.24.0
+
+# Utilities
+pydantic==2.5.2
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+pyyaml>=6.0.0
+
+# System Monitoring (v3.0)
+psutil>=5.9.0
+
+# HTTP Client for webhooks (Compatible with google-genai)
+httpx==0.28.1
+
+# Cover Sheet PDF Generation - Playwright (Headless Chromium)
+playwright>=1.41.0
+
+# Note: pytest, prometheus moved out — not needed in production Docker
+
+# File type detection (for validation)
+python-magic-bin>=0.4.14; sys_platform == "win32"
+python-magic>=0.4.27; sys_platform != "win32"
