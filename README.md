@@ -1,6 +1,6 @@
 # Document AI Approval Pipeline
 
-Portfolio-safe copy of a final-year project that automates student petition workflows:
+A portfolio-safe copy of a final-year project that automates student petition workflows:
 
 - Microsoft Forms intake
 - OCR extraction with FastAPI + Gemini Vision
@@ -10,6 +10,10 @@ Portfolio-safe copy of a final-year project that automates student petition work
 
 The original project was built for Kasetsart University Sriracha Campus. This repository is a curated public version with secrets, tenant-specific IDs, signed webhook URLs, and personal contact details removed.
 
+![Dashboard overview](docs/screenshots/dashboard-overview.png)
+
+_Example dashboard view from the public portfolio edition_
+
 ## Highlights
 
 - OCR API for PDF and image uploads
@@ -17,6 +21,15 @@ The original project was built for Kasetsart University Sriracha Campus. This re
 - cover sheet and final document PDF generation
 - dashboard with table, kanban, stats, and API connection modes
 - smoke-tested backend utilities suitable for demo and extension
+
+## Tech Stack
+
+- Backend: FastAPI, Python 3.10+
+- OCR / AI: Google Gemini Vision
+- Workflow automation: Microsoft Power Automate, Microsoft Teams Approvals
+- Storage: SharePoint and SQLite
+- Frontend: Next.js, TypeScript, Radix UI, Zustand
+- Document generation: Playwright PDF rendering
 
 ## Architecture
 
@@ -88,6 +101,12 @@ This repo intentionally ships a focused smoke test rather than the full internal
 
 The [`automation/`](./automation) directory contains sanitized reference files for Flow 1 and Flow 2. They are meant for architecture review and portfolio presentation, not direct tenant import.
 
+## Portfolio Notes
+
+- This repository is intended to showcase architecture, implementation, and integration design.
+- Tenant-bound assets were replaced with safe placeholders before publishing.
+- The dashboard can run with mock data for presentation without access to the original Microsoft 365 tenant.
+
 ## Public Release Notes
 
 - real API keys and signed Power Automate callback URLs removed
@@ -96,3 +115,7 @@ The [`automation/`](./automation) directory contains sanitized reference files f
 - dashboard URLs converted to environment-driven placeholders
 
 See [`docs/architecture.md`](./docs/architecture.md) and [`docs/security-and-sanitization.md`](./docs/security-and-sanitization.md) for more detail.
+
+## License
+
+This project is released under the [MIT License](LICENSE).
